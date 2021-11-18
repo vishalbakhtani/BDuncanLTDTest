@@ -6,6 +6,8 @@ namespace SerialPortTest
 {
     public partial class Form1 : Form
     {
+        string receivedData;
+
         public Form1()
         {
             InitializeComponent();
@@ -54,10 +56,49 @@ namespace SerialPortTest
 
         private void btnSendData_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (serialPort1.IsOpen)
+                    serialPort1.Write(txtSendData.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnReceiveData_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (serialPort1.IsOpen)
+                {
+                    receivedData = serialPort1.ReadExisting();
+                    this.Invoke(new EventHandler(ShowData));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ShowData(object sender, EventArgs e)
+        {
+            txtReceiveData.Text = receivedData;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                if (serialPort1.IsOpen)
+                    serialPort1.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
