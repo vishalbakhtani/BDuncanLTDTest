@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Ports;
 
 namespace SerialPortTest
 {
@@ -15,6 +16,28 @@ namespace SerialPortTest
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            string[] ports = SerialPort.GetPortNames();
+            cbComPort.Items.AddRange(ports);
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnSendData_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnReceiveData_Click(object sender, EventArgs e)
+        {
         }
     }
 }
